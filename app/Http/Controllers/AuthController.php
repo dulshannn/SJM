@@ -101,6 +101,39 @@ class AuthController extends Controller
         return redirect()->route('login')->with('success', 'Logged out successfully');
     }
 
+    public function showRegister()
+    {
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
+        }
+        return view('auth.register');
+    }
+
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'phone' => 'required|string|max:20',
+            'password' => 'required|min:8|confirmed',
+            'role' => 'nullable|in:admin,customer,supplier,delivery',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'password' => Hash::make($request->password),
+            'role' => $request->role ?? 'customer',
+        ]);
+
+        session(['otp_user_id' => $user->id]);
+
+        $otp = $this->generateOtp($user);
+
+        return redirect()->route('otp.show')->with('success', 'Registration successful! OTP sent to your email');
+    }
+
     private function generateOtp($user)
     {
         OtpLog::where('user_id', $user->id)
