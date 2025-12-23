@@ -9,6 +9,10 @@ use App\Http\Controllers\LandingController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\JewelleryController;
+use App\Http\Controllers\LockerController;
+use App\Http\Controllers\LockerVerificationController;
+use App\Http\Controllers\AdminUserController;
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
 
@@ -40,4 +44,25 @@ Route::middleware('auth')->group(function () {
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/profile/change-password', [ProfileController::class, 'showChangePassword'])->name('profile.change-password');
     Route::post('/profile/change-password', [ProfileController::class, 'changePassword'])->name('profile.change-password.update');
+
+    Route::resource('jewellery', JewelleryController::class);
+
+    Route::resource('lockers', LockerController::class);
+
+    Route::get('/locker-verification', [LockerVerificationController::class, 'index'])->name('locker-verification.index');
+    Route::get('/locker-verification/before', [LockerVerificationController::class, 'beforeStorage'])->name('locker-verification.before');
+    Route::post('/locker-verification/before', [LockerVerificationController::class, 'storeBeforeStorage'])->name('locker-verification.before.store');
+    Route::get('/locker-verification/after/{verification}', [LockerVerificationController::class, 'afterStorage'])->name('locker-verification.after');
+    Route::post('/locker-verification/after/{verification}', [LockerVerificationController::class, 'storeAfterStorage'])->name('locker-verification.after.store');
+    Route::get('/locker-verification/results/{verification}', [LockerVerificationController::class, 'results'])->name('locker-verification.results');
+
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
+        Route::get('/users/create', [AdminUserController::class, 'create'])->name('users.create');
+        Route::post('/users', [AdminUserController::class, 'store'])->name('users.store');
+        Route::get('/users/{user}/edit', [AdminUserController::class, 'edit'])->name('users.edit');
+        Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('users.update');
+        Route::post('/users/{user}/toggle-status', [AdminUserController::class, 'toggleStatus'])->name('users.toggle-status');
+        Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
+    });
 });

@@ -242,9 +242,15 @@
             <ul class="navbar-menu">
                 <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
                 <li><a href="{{ route('customers.index') }}">Customers</a></li>
+                <li><a href="{{ route('jewellery.index') }}">Jewellery</a></li>
+                <li><a href="{{ route('lockers.index') }}">Lockers</a></li>
+                <li><a href="{{ route('locker-verification.index') }}">Verification</a></li>
                 <li><a href="{{ route('suppliers.index') }}">Suppliers</a></li>
                 <li><a href="{{ route('deliveries.index') }}">Deliveries</a></li>
                 <li><a href="{{ route('stock.index') }}">Stock</a></li>
+                @if(Auth::user()->role === 'admin')
+                <li><a href="{{ route('admin.users.index') }}">Users</a></li>
+                @endif
                 <li><a href="{{ route('profile.show') }}">Profile</a></li>
                 <li>
                     <form action="{{ route('logout') }}" method="POST" style="display: inline;">
