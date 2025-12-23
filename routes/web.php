@@ -5,10 +5,12 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\LandingController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\DeliveryController;
+use App\Http\Controllers\StockController;
 
-Route::get('/', function () {
-    return redirect()->route('login');
-});
+Route::get('/', [LandingController::class, 'index'])->name('landing');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -23,6 +25,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::resource('customers', CustomerController::class);
+
+    Route::resource('suppliers', SupplierController::class);
+
+    Route::resource('deliveries', DeliveryController::class);
+
+    Route::get('/stock', [StockController::class, 'index'])->name('stock.index');
+    Route::put('/stock/{stock}/update', [StockController::class, 'update'])->name('stock.update');
 
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');

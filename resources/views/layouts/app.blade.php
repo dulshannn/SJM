@@ -242,6 +242,9 @@
             <ul class="navbar-menu">
                 <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
                 <li><a href="{{ route('customers.index') }}">Customers</a></li>
+                <li><a href="{{ route('suppliers.index') }}">Suppliers</a></li>
+                <li><a href="{{ route('deliveries.index') }}">Deliveries</a></li>
+                <li><a href="{{ route('stock.index') }}">Stock</a></li>
                 <li><a href="{{ route('profile.show') }}">Profile</a></li>
                 <li>
                     <form action="{{ route('logout') }}" method="POST" style="display: inline;">
