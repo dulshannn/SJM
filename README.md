@@ -2,6 +2,8 @@
 
 A premium, secure web application for managing jewellery business operations with a luxury dark theme and OTP-based authentication.
 
+**Database:** Supabase PostgreSQL (Migrated from SQLite)
+
 ## Developer Information
 
 **Developed by:** K. M. Nethmi Sanjalee
@@ -42,16 +44,17 @@ A premium, secure web application for managing jewellery business operations wit
 
 - **Framework:** Laravel 12.x
 - **PHP Version:** 8.2+
-- **Database:** SQLite
+- **Database:** Supabase PostgreSQL
 - **Frontend:** Blade Templates, Vanilla JavaScript, Custom CSS
-- **Security:** Bcrypt hashing, CSRF protection, OTP verification
+- **Security:** Bcrypt hashing, CSRF protection, OTP verification, Row Level Security (RLS)
 
 ## Quick Start
 
 ### Prerequisites
-- PHP 8.2+ with required extensions (PDO, SQLite, XML, DOM, cURL)
+- PHP 8.2+ with required extensions (PDO, PostgreSQL PDO, XML, DOM, cURL, mbstring)
 - Composer
 - Node.js and npm
+- Supabase Account (database already configured)
 
 ### Installation
 
@@ -64,11 +67,11 @@ npm install
 cp .env.example .env
 php artisan key:generate
 
-# 3. Create database
-touch database/database.sqlite
+# 3. Configure database password in .env
+# Update DB_PASSWORD with your Supabase database password
 
-# 4. Run migrations
-php artisan migrate:fresh --seed
+# 4. Database is already set up in Supabase
+# Tables and admin user are already created
 
 # 5. Build assets
 npm run build
@@ -85,7 +88,9 @@ The OTP code will be logged in the Laravel logs at `storage/logs/laravel.log`
 
 ## Documentation
 
-For detailed setup instructions, features documentation, and customization guide, please refer to `SETUP_GUIDE.md`.
+- **PostgreSQL Migration:** See `POSTGRESQL_MIGRATION_COMPLETE.md` for complete migration details
+- **Setup Guide:** See `SETUP_GUIDE.md` for detailed setup instructions
+- **Quick Start:** See `QUICK_START.txt` for quick reference
 
 ## Project Structure
 
@@ -107,21 +112,25 @@ resources/
 │   ├── customers/                  # Customer management
 │   ├── profile/                    # Profile pages
 │   └── dashboard.blade.php
-database/
-└── migrations/
-    ├── create_customers_table.php
-    └── create_otp_logs_table.php
+Supabase Database (PostgreSQL):
+├── users (with RLS)
+├── customers (with RLS)
+├── otp_logs (with RLS)
+├── sessions (with RLS)
+└── supporting tables
 ```
 
 ## Security Features
 
 - Bcrypt password hashing (12 rounds)
-- Time-based OTP with expiry
+- Time-based OTP with expiry (5 minutes)
 - CSRF token protection
 - Server-side input validation
 - XSS protection
-- SQL injection prevention
+- SQL injection prevention (PDO prepared statements)
 - Secure session handling
+- Row Level Security (RLS) on all database tables
+- Restrictive security policies for data access
 
 ## Module Responsibilities
 
