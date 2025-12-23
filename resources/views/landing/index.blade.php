@@ -189,13 +189,13 @@
 <body>
     <div class="video-background">
         <video id="bg-video-1" class="video-layer" autoplay muted loop playsinline>
-            <source src="https://cdn.pixabay.com/video/2021/03/27/69098-531024197_large.mp4" type="video/mp4">
+            <source src="v1.mp4" type="video/mp4">
         </video>
         <video id="bg-video-2" class="video-layer" autoplay muted loop playsinline>
-            <source src="https://cdn.pixabay.com/video/2020/01/08/31055-383967820_large.mp4" type="video/mp4">
+            <source src="v2.mp4" type="video/mp4">
         </video>
         <video id="bg-video-3" class="video-layer" autoplay muted loop playsinline>
-            <source src="https://cdn.pixabay.com/video/2022/06/23/121493-724736834_large.mp4" type="video/mp4">
+            <source src="v3" type="video/mp4">
         </video>
     </div>
     <div class="overlay"></div>
